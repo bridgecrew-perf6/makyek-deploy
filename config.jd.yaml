@@ -1,0 +1,39 @@
+base:
+  api:
+    url: http://172.17.0.1:8888
+    credential:
+      username: foo
+      password: bar
+  # relative to current dir
+  # set to null to disable sandbox
+  sandbox: null
+  # relative to current dir
+  runtimeDirectory: ../runtime
+  compile:
+    # WARN: config will be MERGED so that this section is tricky in `config.xxx.yaml`
+    _base:
+      timeout: 20000
+      source: foo.c
+      target: foo.exe
+      sandboxArgs: 
+    _gcc11:
+      command: gcc
+      args: -O2 -Wall -o foo.exe foo.c 
+    gcc51c11:
+      extend: [_base, _gcc11]
+      env:
+        PATH: "/usr/bin"
+  match:
+    s1bin: ./challenger.exe
+    s2bin: ./opponent.exe
+    config: config.json
+    summary: summary.json
+    command: node
+    # relative to the working directory
+    args: /app/makyek-judge/.dist/bootstrap.js --config config.json
+  mq:
+    connection:
+      hostname: 172.17.0.1
+      username: root
+      password: 123456
+      heartbeat: 30

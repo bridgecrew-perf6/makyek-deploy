@@ -1,1 +1,1 @@
-# config
+example configs for running inside docker-compose
