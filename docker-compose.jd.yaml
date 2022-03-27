@@ -5,7 +5,8 @@ services:
     restart: always
     command: node .dist/jd.js --role compile
     volumes:
-      - ./config.jd.yaml:/app/config.yaml:ro
+      - ./config.jd-compile.yaml:/app/makyek-jd/config.yaml:ro
+      - ./wrapper.sh:/wrapper.sh:ro
     tmpfs:
       - /app/makyek-jd/logs:mode=770,uid=1000,gid=1000
       - /runtime:mode=770,uid=1000,gid=1000
@@ -19,7 +20,8 @@ services:
     restart: always
     command: node .dist/jd.js --role match
     volumes:
-      - ./config.jd.yaml:/app/config.yaml:ro
+      - ./config.jd-match.yaml:/app/makyek-jd/config.yaml:ro
+      - ./wrapper.sh:/wrapper.sh:ro
     tmpfs:
       - /app/makyek-jd/logs:mode=770,uid=1000,gid=1000
       - /runtime:mode=770,uid=1000,gid=1000,exec
@@ -30,4 +32,3 @@ services:
 
 networks:
   makyek-jd:
-      

@@ -1,0 +1,22 @@
+base:
+  api:
+    url: http://host.docker.internal:8888
+    credential:
+      username: foo
+      password: bar
+  sandbox: "/wrapper.sh"
+  runtimeDirectory: /app/runtime
+  match:
+    s1bin: ./challenger.exe
+    s2bin: ./opponent.exe
+    config: config.json
+    summary: summary.json
+    command: node
+    # relative to the working directory
+    args: /app/makyek-judge/.dist/bootstrap.js --config config.json
+  mq:
+    connection:
+      hostname: host.docker.internal
+      username: root
+      password: 123456
+      heartbeat: 30
