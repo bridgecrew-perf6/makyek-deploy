@@ -1,0 +1,44 @@
+version: "2.4"
+services:
+  redis:
+    image: redis:6-alpine
+    command: redis-server --requirepass redis
+    restart: always
+    # for debugging
+    # ports:
+    #   - 6379:6379
+  db:
+    image: mongo
+    ports:
+      - "27017:27017"
+    command: [--auth]
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=makyek
+      - MONGO_INITDB_ROOT_PASSWORD=makyek
+      - MONGO_INITDB_DATABASE=db
+      - MONGO_USERNAME=makyek
+      - MONGO_PASSWORD=makyek
+    volumes:
+      - ./.persistence/db/mongo_data:/data/db
+      - ./mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh
+  rabbit:
+    image: rabbitmq:3.7-management
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=root
+      - RABBITMQ_DEFAULT_PASS=123456
+    volumes:
+      - ./.persistence/rabbit-mq/data:/var/lib/rabbitmq
+  portal:
+    build: .
+    image: makyek-portal:latest
+    restart: always
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./config.portal.yaml:/app/config.yaml:ro
+    tmpfs:
+      - /app/logs:mode=770,uid=1000,gid=1000

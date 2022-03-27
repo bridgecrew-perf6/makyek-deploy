@@ -1,0 +1,20 @@
+version: "2.4"
+services:
+  jd-compile:
+    image: makyek-jd:latest
+    restart: always
+    command: node .dist/jd.js --role compile
+    volumes:
+      - ./config.jd.yaml:/app/config.yaml:ro
+    tmpfs:
+      - /app/makyek-jd/logs:mode=770,uid=1000,gid=1000
+      - /runtime:mode=770,uid=1000,gid=1000
+  jd-match:
+    image: makyek-jd:latest
+    restart: always
+    command: node .dist/jd.js --role match
+    volumes:
+      - ./config.jd.yaml:/app/config.yaml:ro
+    tmpfs:
+      - /app/makyek-jd/logs:mode=770,uid=1000,gid=1000
+      - /runtime:mode=770,uid=1000,gid=1000,exec
