@@ -7,6 +7,9 @@ services:
     # for debugging
     # ports:
     #   - 6379:6379
+    networks:
+      - makyek-core
+    
   db:
     image: mongo
     ports:
@@ -20,7 +23,10 @@ services:
       - MONGO_PASSWORD=makyek
     volumes:
       - ./.persistence/db/mongo_data:/data/db
-      - ./mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh
+      - ./mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
+    networks:
+      - makyek-core
+  
   rabbit:
     image: rabbitmq:3.7-management
     restart: always
@@ -32,6 +38,9 @@ services:
       - RABBITMQ_DEFAULT_PASS=123456
     volumes:
       - ./.persistence/rabbit-mq/data:/var/lib/rabbitmq
+    networks:
+      - makyek-core
+  
   portal:
     build: .
     image: makyek-portal:latest
@@ -42,3 +51,8 @@ services:
       - ./config.portal.yaml:/app/config.yaml:ro
     tmpfs:
       - /app/logs:mode=770,uid=1000,gid=1000
+    networks:
+      - makyek-core
+
+networks:
+  makyek-core:
