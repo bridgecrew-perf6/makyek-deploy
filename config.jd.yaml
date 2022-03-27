@@ -1,6 +1,6 @@
 base:
   api:
-    url: http://172.17.0.1:8888
+    url: http://host.docker.internal:8888
     credential:
       username: foo
       password: bar
@@ -33,7 +33,7 @@ base:
     args: /app/makyek-judge/.dist/bootstrap.js --config config.json
   mq:
     connection:
-      hostname: 172.17.0.1
+      hostname: host.docker.internal
       username: root
       password: 123456
       heartbeat: 30

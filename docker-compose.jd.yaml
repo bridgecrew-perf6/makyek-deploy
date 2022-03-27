@@ -9,6 +9,8 @@ services:
     tmpfs:
       - /app/makyek-jd/logs:mode=770,uid=1000,gid=1000
       - /runtime:mode=770,uid=1000,gid=1000
+    extra_hosts:
+      - host.docker.internal:host-gateway
   jd-match:
     image: makyek-jd:latest
     restart: always
@@ -18,3 +20,5 @@ services:
     tmpfs:
       - /app/makyek-jd/logs:mode=770,uid=1000,gid=1000
       - /runtime:mode=770,uid=1000,gid=1000,exec
+    extra_hosts:
+      - host.docker.internal:host-gateway
