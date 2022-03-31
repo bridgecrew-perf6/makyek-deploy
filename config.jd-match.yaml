@@ -4,15 +4,14 @@ base:
     credential:
       username: foo
       password: bar
-  sandbox: "/wrapper.sh"
-  runtimeDirectory: /app/runtime
+  sandbox: "/app/wrappers/match-stage-1.py"
+  runtimeDirectory: /tmp/runtime
   match:
     s1bin: ./challenger.exe
     s2bin: ./opponent.exe
     config: config.json
     summary: summary.json
     command: node
-    # relative to the working directory
     args: /app/makyek-judge/.dist/bootstrap.js --config config.json
   mq:
     connection:
