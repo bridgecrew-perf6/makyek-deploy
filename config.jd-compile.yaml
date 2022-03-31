@@ -4,8 +4,9 @@ base:
     credential:
       username: foo
       password: bar
-  sandbox: "/app/wrappers/compiler.sh"
-  runtimeDirectory: /tmp/runtime
+  #sandbox: /app/wrappers/compiler.sh
+  sandbox: null
+  runtimeDirectory: /app/runtime
   compile:
     _base:
       timeout: 20000
@@ -14,7 +15,7 @@ base:
       sandboxArgs: 
     _gcc11:
       command: gcc
-      args: -O2 -Wall -Wextra -static -lm -Wl,--stack=134217728 -std=c11 -mcpu=x86-64-v2 -o foo.exe -- foo.c
+      args: -O2 -Wall -static -lm -std=c11 -o foo.exe foo.c
     gcc51c11:
       extend: [_base, _gcc11]
       env:

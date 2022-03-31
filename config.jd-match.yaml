@@ -5,7 +5,7 @@ base:
       username: foo
       password: bar
   sandbox: "/app/wrappers/match-stage-1.py"
-  runtimeDirectory: /tmp/runtime
+  runtimeDirectory: /app/runtime
   match:
     s1bin: ./challenger.exe
     s2bin: ./opponent.exe

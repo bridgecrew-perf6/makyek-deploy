@@ -1,49 +1,44 @@
 #!/usr/bin/python3
 import argparse
 import os
-import psutil
 import shutil
 import subprocess
 import sys
 from string import Template
 
-NICE_SELF = -19
-NICE_SUBPROCESS = 20
-
 stage2_wrapper_template = Template('''
-ulimit -H -t $cpu_time_sec
-ulimit -H -p $processes
-ulimit -H -m $memory_KB
-ulimit -H -n $fds
+set -eu
 
-exec "$@"
+ulimit -t $cpu_time_sec
+ulimit -p $processes
+ulimit -m $memory_KB
+ulimit -n $fds
+
+exec "$$@"
 ''')
 
-def generate_stage2_wrapper(cpu_time_sec=120, processes=1, memory_KB=524288, fds=1):
+def generate_stage2_wrapper(cpu_time_sec=120, processes=1, memory_KB=524288, fds=3):
     return stage2_wrapper_template.substitute(locals())
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--use-desktop', action='store_true')
     parser.add_argument('--use-logon', action='store_true')
-    parser.add_argument('--active-process', type=int)
-    parser.add_argument('--memory', type=int)
-    parser.add_argument('--affinity', type=int)
+    parser.add_argument('--active-process', type=int, default=1)
+    parser.add_argument('--memory', type=int, default=524288)
+    parser.add_argument('--affinity', type=int) # not implemented
     parser.add_argument('cmd', nargs='+')
     args = parser.parse_args()
-
-    # set self nice
-    psutil.Process(os.getpid()).set_nice(NICE_SELF)
 
     f = open("/tmp/sandbox.log", "a")
     f.write("args %s\n" % args)
 
     # write stage 2 wrapper
-    with open("wrapper.sh", "w") as f:
-        f.write(generate_stage2_wrapper())
+    with open("wrapper.sh", "w") as wrapper_fd:
+        wrapper_fd.write(generate_stage2_wrapper(processes=args.active_process, memory_KB=args.memory))
     
     # copy stage 2 wrapper runtime
-    shutil.copy("/usr/bin/busybox", "busybox")
+    shutil.copy("/bin/busybox", "busybox")
 
     try:
         # ls_ret = subprocess.Popen("ls -lh", stdout=subprocess.PIPE, shell=True).communicate()
