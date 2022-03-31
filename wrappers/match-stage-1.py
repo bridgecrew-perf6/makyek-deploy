@@ -30,7 +30,7 @@ if __name__ == "__main__":
     parser.add_argument('cmd', nargs='+')
     args = parser.parse_args()
 
-    f = open("/tmp/sandbox.log", "a")
+    f = open("/tmp/sandbox.log", "a") # for debugging only
     f.write("args %s\n" % args)
 
     # write stage 2 wrapper
@@ -43,9 +43,6 @@ if __name__ == "__main__":
     try:
         # ls_ret = subprocess.Popen("ls -lh", stdout=subprocess.PIPE, shell=True).communicate()
         # f.write("ls %s\n" % str(ls_ret))
-
-        # generate stage 2 wrapper which must be an ash shell script
-
 
         # note: fakechroot is not a security boundary. It is only used to verify if static linking is working.
         # cmd = ["/usr/bin/fakechroot", "chroot", os.getcwd()]
