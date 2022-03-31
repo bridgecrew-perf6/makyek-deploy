@@ -4,15 +4,15 @@ base:
     credential:
       username: foo
       password: bar
-  #sandbox: /app/wrappers/compiler.sh
-  sandbox: null
+  sandbox: /app/wrappers/compiler.sh
+  #sandbox: null
   runtimeDirectory: /app/runtime
   compile:
     _base:
       timeout: 20000
       source: foo.c
       target: foo.exe
-      sandboxArgs: 
+      sandboxArgs: "" # must not be null
     _gcc11:
       command: gcc
       args: -O2 -Wall -static -lm -std=c11 -o foo.exe foo.c

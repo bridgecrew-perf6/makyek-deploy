@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 # Functionality:
 # - change to a non-root user
@@ -7,10 +8,12 @@
 # - The file to be compiled is under working directory
 # - No further directory structure
 # - A end user cannot guess the path of another user's source code (no filesystem level isolation is implemented)
+# Notes:
+# - $PATH is fucked up, so we hardcoded all paths here
 
 # fix the permission: give write permission to the nobody user
-chgrp --perserve-root --no-dereference --verbose -P nogroup -- .
-chmod --preserve-root --verbose 0770 -- .
-chmod --preserve-root --verbose 0660 -- ./*
+/bin/chgrp --preserve-root --no-dereference -P --recursive nogroup -- .
+/bin/chmod --preserve-root 0770 -- .
+/bin/chmod --preserve-root 0660 -- ./*
 
-sudo -u nobody -- "$@"
+/usr/bin/sudo -u nobody -g nogroup -- "$@"
