@@ -15,7 +15,7 @@ base:
       sandboxArgs: "" # must not be null
     _gcc11:
       command: gcc
-      args: -O2 -Wall -static -lm -std=c11 -o foo.exe foo.c
+      args: foo.c -O2 -Wall -static -std=c11 -o foo.exe -lm
     gcc51c11:
       extend: [_base, _gcc11]
       env:
