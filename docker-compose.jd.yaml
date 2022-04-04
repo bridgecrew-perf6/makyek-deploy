@@ -1,9 +1,12 @@
 version: "2.4"
 services:
-  jd-compile-1:
+  jd-compile-1: &jd-compile-template
     image: makyek-jd:latest
     restart: always
     command: node .dist/jd.js --role compile
+    cpu_count: 1
+    mem_limit: 2g
+    memswap_limit: 2g
     volumes:
       - ./config.jd-compile.yaml:/app/makyek-jd/config.yaml:ro
       - ./wrappers:/app/wrappers:ro
@@ -15,10 +18,16 @@ services:
     networks:
       - makyek-jd
 
-  jd-match-1:
+  jd-compile-2: 
+    <<: *jd-compile-template
+
+  jd-match-1: &jd-match-template
     image: makyek-jd:latest
     restart: always
     command: node .dist/jd.js --role match
+    cpu_count: 1
+    mem_limit: 2g
+    memswap_limit: 2g
     volumes:
       - ./config.jd-match.yaml:/app/makyek-jd/config.yaml:ro
       - ./wrappers:/app/wrappers:ro
@@ -29,6 +38,9 @@ services:
       - host.docker.internal:host-gateway
     networks:
       - makyek-jd
+
+  jd-match-2: 
+    <<: *jd-match-template
 
 networks:
   makyek-jd:
