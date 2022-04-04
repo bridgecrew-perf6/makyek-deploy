@@ -13,11 +13,19 @@ base:
       source: foo.c
       target: foo.exe
       sandboxArgs: "" # must not be null
-    _gcc11:
+    _gcc_stdc11:
       command: gcc
       args: foo.c -O2 -Wall -static -std=c11 -o foo.exe -lm
-    gcc51c11:
-      extend: [_base, _gcc11]
+    _clang_stdc11:
+      command: clang
+      args: foo.c -O2 -Wall -static -std=c11 -o foo.exe -lm
+    gcc8:
+      extend: [_base, _gcc_stdc11]
+      env:
+        PATH: "/usr/bin"
+    clang14:
+      extend: [_base, _clang_stdc11]
+      command: clang-14
       env:
         PATH: "/usr/bin"
   mq:

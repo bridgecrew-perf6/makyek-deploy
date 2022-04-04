@@ -20,7 +20,8 @@ base:
       password: bar
   compile:
     display:
-      gcc51c11:     TDM-GCC 5.1.0 (Release, 64-bit, with C11)
+      gcc8:         GCC 8
+      clang14:      LLVM/Clang 14
     limits:
       sizeOfCode: 1048576     # 1 MB
       sizeOfBin: 1048576      # 1 MB
