@@ -1,5 +1,6 @@
 #!/bin/bash
 set -Eeuxo pipefail
+cd -- "$( dirname -- "${BASH_SOURCE[0]}" )"
 
 function docker-exec() {
     docker-compose -f docker-compose.portal.yaml -f docker-compose.jd.yaml exec portal $@
