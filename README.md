@@ -9,8 +9,8 @@ Tested on:
 
 Build containers:
 ```shell
-(cd makyek-portal && docker-compose build)
-(cd makyek-jd && docker-compose build)
+(cd ../makyek-portal && docker-compose build)
+(cd ../makyek-jd && docker-compose build)
 ```
 
 Start server:
