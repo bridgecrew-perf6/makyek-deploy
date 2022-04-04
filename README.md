@@ -1,5 +1,7 @@
 example configs for running inside docker-compose
 
+## Usage
+
 Tested on:
 - Kali rolling (Linux kernel 5.16.0)
 - Docker 20.10.11
@@ -14,6 +16,13 @@ Build containers:
 Start server:
 ```shell
 ./start-debug.sh
+./create-users.sh
+```
+
+Reset data:
+```shell
+docker-compose -f docker-compose.portal.yaml -f docker-compose.jd.yaml down --remove-orphans
+rm .persistence
 ```
 
 Note:
