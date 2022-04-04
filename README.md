@@ -16,10 +16,10 @@ Build containers:
 Start server:
 ```shell
 ./start-debug.sh
-./create-users.sh
+./create-users.sh # creates some test user
 ```
 
-Reset data:
+Reset data (dangerous!):
 ```shell
 docker-compose -f docker-compose.portal.yaml -f docker-compose.jd.yaml down --remove-orphans
 rm .persistence
