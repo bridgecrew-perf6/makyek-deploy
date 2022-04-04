@@ -1,3 +1,5 @@
+# Note: you can create one or multiple instances of either jd-compile and jd-match. 
+# Tasks will be automatically load balanced across multiple instances.
 version: "2.4"
 services:
   jd-compile-1: &jd-compile-template

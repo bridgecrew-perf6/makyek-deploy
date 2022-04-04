@@ -4,9 +4,6 @@ services:
     image: redis:6-alpine
     command: redis-server --requirepass redis
     restart: always
-    # for debugging
-    # ports:
-    #   - 6379:6379
     networks:
       - makyek-core
     
@@ -15,6 +12,7 @@ services:
     ports:
       - "27017:27017"
     command: [--auth]
+    restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=makyek
       - MONGO_INITDB_ROOT_PASSWORD=makyek
