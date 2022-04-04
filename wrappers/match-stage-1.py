@@ -1,8 +1,9 @@
 #!/usr/bin/python3
+# Poor man's sandbox for the target executables (stage 1)
 # This scripts does the following things:
 # 1. Parse the arguments from jd-match
 # 2. Copy every required file into the chroot sandbox (all executables need to be statically linked)
-# 3. Chroot, apply resource limit and execute the target
+# 3. Chroot, apply resource limit (using the generated stage 2 script) and execute the target
 import argparse
 import os
 import shutil
@@ -10,6 +11,8 @@ import subprocess
 import sys
 from string import Template
 
+# stage 2 is used to actually apply resource limits
+# and invoke the target executable
 stage2_wrapper_template = Template('''
 set -eu
 
