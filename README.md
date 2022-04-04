@@ -21,6 +21,8 @@ Start server:
 ./create-users.sh # creates some test user
 ```
 
+Portal is hosted at http://localhost:8888.
+
 Reset data (dangerous!):
 ```shell
 docker-compose -f docker-compose.portal.yaml -f docker-compose.jd.yaml down --remove-orphans
