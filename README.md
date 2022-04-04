@@ -30,3 +30,6 @@ rm .persistence
 ## Notes
 
 - Some containers will restart a few times before all their dependencies are up. This is expected. 
+- The portal and all the jd-compile containers must share exactly the same view of compiler list
+- All the jd-match containers must be able to run any of the target executables
+- If rabbitmq restarts, jd-compile and jd-match containers might stall, causing all jobs to stuck in pending status. In such case, please manually restart all jd-compile and jd-match containers. 
