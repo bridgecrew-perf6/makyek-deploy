@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+# This scripts does the following things:
+# 1. Parse the arguments from jd-match
+# 2. Copy every required file into the chroot sandbox (all executables need to be statically linked)
+# 3. Chroot, apply resource limit and execute the target
 import argparse
 import os
 import shutil
@@ -30,8 +34,8 @@ if __name__ == "__main__":
     parser.add_argument('cmd', nargs='+')
     args = parser.parse_args()
 
-    f = open("/tmp/sandbox.log", "a") # for debugging only
-    f.write("args %s\n" % args)
+    # f = open("/tmp/sandbox.log", "a") # for debugging only
+    # f.write("args %s\n" % args)
 
     # write stage 2 wrapper
     with open("wrapper.sh", "w") as wrapper_fd:
@@ -49,7 +53,7 @@ if __name__ == "__main__":
         cmd = ["/usr/sbin/chroot", "--userspec=nobody:nogroup", "--", os.getcwd()] # chroot + drop privilege
         cmd.extend(["./busybox", "ash", "--", "./wrapper.sh"]) # stage 2 wrapper
         cmd.extend(args.cmd), # actual program
-        f.write("cmd %s\n" % cmd)
+        # f.write("cmd %s\n" % cmd)
 
         p = subprocess.Popen(
             cmd,
@@ -60,11 +64,13 @@ if __name__ == "__main__":
         ret = p.wait()
         p.communicate() # flush pipes
 
-        f.write("ret %d\n" % ret)
+        # f.write("ret %d\n" % ret)
         sys.exit(ret)
 
     except Exception as ex:
-        f.write("err %s\n" % ex)
+        pass
+        # f.write("err %s\n" % ex)
 
     finally:
-        f.close()
+        pass
+        # f.close()
