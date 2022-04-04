@@ -1,11 +1,13 @@
 example configs for running inside docker-compose
 
-## Usage
+## Requirements
 
 Tested on:
 - Kali rolling (Linux kernel 5.16.0)
 - Docker 20.10.11
 - Docker Compose 1.29.2
+
+## Usage
 
 Build containers:
 ```shell
@@ -25,5 +27,6 @@ docker-compose -f docker-compose.portal.yaml -f docker-compose.jd.yaml down --re
 rm .persistence
 ```
 
-Note:
+## Notes
+
 - Some containers will restart a few times before all their dependencies are up. This is expected. 
